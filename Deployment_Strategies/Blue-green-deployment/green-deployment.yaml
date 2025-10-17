@@ -2,22 +2,23 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: online-shop-blue
-  name: online-shop-blue
+    app: online-shop-green
+  name: online-shop-green
   namespace: blue-green-ns
 spec:
   replicas: 4
   selector:
     matchLabels:
-      app: online-shop-blue
+      app: online-shop-green
   template:
     metadata:
       labels:
-        app: online-shop-blue
+        app: online-shop-green
     spec:
       containers:
-      - image: amitabhdevops/online_shop_without_footer
-        name: online-shop-blue
+      # - image: amitabhdevops/online_shop
+      - image: anjia0532/google-samples.microservices-demo.frontend:v0.3.6
+        name: online-shop-green
         resources:
           limits:
             cpu: "500m"
@@ -29,16 +30,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: online-shop-blue-deployment-service
+  name: online-shop-green-deployment-service
   namespace: blue-green-ns
 spec:
   selector:
-    app: online-shop-blue
+    app: online-shop-green
   type: NodePort
   ports:
     - protocol: TCP
-      port: 3001
-      targetPort: 3000
-      nodePort: 30001
-      
-      
+      port: 3000
+      targetPort: 8080
+      nodePort: 3000

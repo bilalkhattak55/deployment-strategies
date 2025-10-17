@@ -2,22 +2,23 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: online-shop-green
-  name: online-shop-green
+    app: online-shop-blue
+  name: online-shop-blue
   namespace: blue-green-ns
 spec:
   replicas: 4
   selector:
     matchLabels:
-      app: online-shop-green
+      app: online-shop-blue
   template:
     metadata:
       labels:
-        app: online-shop-green
+        app: online-shop-blue
     spec:
       containers:
-      - image: amitabhdevops/online_shop
-        name: online-shop-green
+      # - image: amitabhdevops/online_shop_without_footer
+      - image: weaveworksdemos/front-end:latest
+        name: online-shop-blue
         resources:
           limits:
             cpu: "500m"
@@ -29,14 +30,16 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: online-shop-green-deployment-service
+  name: online-shop-blue-deployment-service
   namespace: blue-green-ns
 spec:
   selector:
-    app: online-shop-green
+    app: online-shop-blue
   type: NodePort
   ports:
     - protocol: TCP
-      port: 3000
-      targetPort: 3000
-      nodePort: 30000
+      port: 3001
+      targetPort: 8079
+      nodePort: 3001
+      
+      
