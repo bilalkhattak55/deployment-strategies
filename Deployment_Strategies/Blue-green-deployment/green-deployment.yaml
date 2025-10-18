@@ -1,3 +1,51 @@
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   labels:
+#     app: online-shop-green
+#   name: online-shop-green
+#   namespace: blue-green-ns
+# spec:
+#   replicas: 4
+#   selector:
+#     matchLabels:
+#       app: online-shop-green
+#   template:
+#     metadata:
+#       labels:
+#         app: online-shop-green
+#     spec:
+#       containers:
+#       # - image: amitabhdevops/online_shop
+#       # - image: anjia0532/google-samples.microservices-demo.frontend:v0.3.6
+#       - image: nginx:latest
+#         name: online-shop-green
+#         ports:
+#           - containerPort: 80
+#         resources:
+#            limits:
+#              cpu: "500m"
+#              memory: "512Mi"
+#            requests:
+#              cpu: "200m"
+#              memory: "256Mi"
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: online-shop-green-deployment-service
+#   namespace: blue-green-ns
+# spec:
+#   selector:
+#     app: online-shop-green
+#   type: NodePort
+#   ports:
+#     - protocol: TCP
+#       port: 80
+#       targetPort: 80
+#       nodePort: 30000
+
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,19 +64,17 @@ spec:
         app: online-shop-green
     spec:
       containers:
-      # - image: amitabhdevops/online_shop
-      # - image: anjia0532/google-samples.microservices-demo.frontend:v0.3.6
-      - image: nginx:latest
-        name: online-shop-green
-        ports:
-          - containerPort: 80
-        resources:
-           limits:
-             cpu: "500m"
-             memory: "512Mi"
-           requests:
-             cpu: "200m"
-             memory: "256Mi"
+        - name: online-shop-green
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+          resources:
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+            requests:
+              cpu: "200m"
+              memory: "256Mi"
 ---
 apiVersion: v1
 kind: Service
@@ -44,3 +90,4 @@ spec:
       port: 80
       targetPort: 80
       nodePort: 30000
+
