@@ -17,7 +17,8 @@ spec:
     spec:
       containers:
       # - image: amitabhdevops/online_shop
-      - image: anjia0532/google-samples.microservices-demo.frontend:v0.3.6
+      # - image: anjia0532/google-samples.microservices-demo.frontend:v0.3.6
+        - image: nginx:latest
         name: online-shop-green
         resources:
           limits:
@@ -38,6 +39,6 @@ spec:
   type: NodePort
   ports:
     - protocol: TCP
-      port: 3000
-      targetPort: 8080
-      nodePort: 3000
+      port: 30000
+      targetPort: 80
+      nodePort: 30000
